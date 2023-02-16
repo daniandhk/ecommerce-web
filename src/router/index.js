@@ -29,6 +29,15 @@ const routes = [
         },
     },
     {
+        path: '/products',
+        name: 'products',
+        component: () => import( /* webpackChunkName: "dashboard" */ '@/views/dashboard/Products.vue'),
+        meta: {
+            authRequired: true,
+            isAdmin: true
+        },
+    },
+    {
         path: '/history',
         name: 'history',
         component: () => import( /* webpackChunkName: "dashboard" */ '@/views/history/Index.vue'),

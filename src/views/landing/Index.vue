@@ -84,12 +84,12 @@
         </div>
         <div class="form-group mb-2">
           <label class="mb-2">Alamat</label>
-          <input
-            type="text"
-            v-model="order.address"
+          <textarea
             class="form-control"
+            id="address"
+            v-model="order.address"
             placeholder="Alamat"
-          />
+          ></textarea>
           <div v-if="validation.address" class="mt-2 alert alert-danger">
             {{ validation.address[0] }}
           </div>

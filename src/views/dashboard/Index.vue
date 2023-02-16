@@ -36,9 +36,7 @@
                     }}
                     / pcs
                   </td>
-                  <td class="text-center">
-                    {{ order.quantity }}
-                  </td>
+                  <td class="text-center">{{ order.quantity }} pcs</td>
                   <td>
                     Rp.
                     {{

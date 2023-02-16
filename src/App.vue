@@ -35,6 +35,11 @@
             >Pesanan</router-link
           >
         </li>
+        <li v-if="role == 'admin'" class="nav-item">
+          <router-link :to="{ name: 'products' }" class="nav-link"
+            >Produk</router-link
+          >
+        </li>
         <li v-if="role == 'user'" class="nav-item">
           <router-link :to="{ name: 'history' }" class="nav-link"
             >Pesanan Anda</router-link
@@ -76,8 +81,11 @@ export default {
             window.location.href = "/";
           }
         })
-        .catch((error) => {
-          console.log(error.response.data);
+        .catch(() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+
+          window.location.href = "/";
         });
     }
 
