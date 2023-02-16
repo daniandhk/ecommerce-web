@@ -127,6 +127,7 @@ export default {
     const validation = ref([]);
     let products = ref([]);
     let showModal = ref(false);
+    let emptyProducts = ref(false);
 
     //mounted
     onMounted(() => {
@@ -136,7 +137,7 @@ export default {
         .then((response) => {
           products.value = response.data.data;
           if (response.data.data.length == 0) {
-            this.emptyProducts = true;
+            emptyProducts.value = true;
           }
         })
         .catch((error) => {
@@ -176,6 +177,7 @@ export default {
       order,
       store,
       validation,
+      emptyProducts,
     };
   },
   data() {
@@ -186,8 +188,6 @@ export default {
         price: "",
         quantity: "",
       },
-
-      emptyProducts: false,
     };
   },
 

@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card border-0 rounded shadow">
           <div class="card-body">
-            <h4>Pesanan</h4>
+            <h4>Riwayat Pesanan</h4>
             <hr />
 
             <div v-if="emptyProducts" class="alert alert-info">
@@ -13,7 +13,6 @@
             <table v-else class="table table-striped table-bordered mt-4">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">Email</th>
                   <th scope="col">Barang</th>
                   <th scope="col">Harga</th>
                   <th class="text-center" scope="col">Jumlah</th>
@@ -25,7 +24,6 @@
               </thead>
               <tbody>
                 <tr v-for="(order, index) in orders" :key="index">
-                  <td>{{ order.user.email }}</td>
                   <td>{{ order.product.name }}</td>
                   <td>
                     Rp.
@@ -55,26 +53,11 @@
                   </td>
                   <td class="text-center">
                     <button
-                      v-if="order.status == 'pending'"
-                      class="btn btn-sm btn-success mx-1"
-                      @click="approve(order.id)"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      v-if="order.status == 'pending'"
-                      class="btn btn-sm btn-danger mx-1"
-                      @click="reject(order.id)"
-                    >
-                      Reject
-                    </button>
-                    <label v-if="order.status != 'pending'"> - </label>
-                    <!-- <button
                       class="btn btn-sm btn-danger"
                       @click="destroy(order.id)"
                     >
                       Hapus
-                    </button> -->
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -94,13 +77,16 @@ export default {
   setup() {
     //reactive state
     let orders = ref([]);
+    let user = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : null;
     let emptyProducts = ref(false);
 
     //mounted
     onMounted(() => {
       //get API from Laravel Backend
       axios
-        .get("/orders")
+        .get("/user/" + user.id + "/orders")
         .then((response) => {
           //assign state orders with response data
           orders.value = response.data.data;
@@ -121,34 +107,6 @@ export default {
   },
 
   methods: {
-    approve(id) {
-      axios
-        .put("/orders/" + id, {
-          status: "approved",
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.go();
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
-    },
-
-    reject(id) {
-      axios
-        .put("/orders/" + id, {
-          status: "rejected",
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.go();
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
-    },
-
     destroy(id) {
       axios
         .delete("/orders/" + id)

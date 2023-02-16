@@ -32,15 +32,15 @@
       <ul class="navbar-nav ms-auto">
         <li v-if="role == 'admin'" class="nav-item">
           <router-link :to="{ name: 'dashboard' }" class="nav-link"
-            >Dashboard</router-link
+            >Pesanan</router-link
+          >
+        </li>
+        <li v-if="role == 'user'" class="nav-item">
+          <router-link :to="{ name: 'history' }" class="nav-link"
+            >Pesanan Anda</router-link
           >
         </li>
         <!-- <li v-if="role == 'user' " class="nav-item">
-          <router-link :to="{ name: 'dashboard' }" class="nav-link"
-            >Dashboard</router-link
-          >
-        </li>
-        <li v-if="role == 'user' " class="nav-item">
           <router-link :to="{ name: 'dashboard' }" class="nav-link"
             >Dashboard</router-link
           >

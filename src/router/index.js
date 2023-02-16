@@ -27,7 +27,16 @@ const routes = [
             authRequired: true,
             isAdmin: true
         },
-    }
+    },
+    {
+        path: '/history',
+        name: 'history',
+        component: () => import( /* webpackChunkName: "dashboard" */ '@/views/history/Index.vue'),
+        meta: {
+            authRequired: true,
+            isAdmin: false
+        },
+    },
 ]
 
 //create router
@@ -51,25 +60,26 @@ router.beforeEach((routeTo, routeFrom, next) => {
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("user", JSON.stringify(response.data.data));
                     localStorage.setItem("role", response.data.role);
-                    return next();
+
+                    if (isAdmin == true) {
+                        let role = localStorage.getItem("role")
+                        if (role == "admin") {
+                            return next()
+                        } else {
+                            return next({ name: 'home' })
+                        }
+                    } else {
+                        return next()
+                    }
                 }
             })
             .catch((error) => {
                 console.log(error)
                 return next({ name: 'login' })
             });
+    } else {
+        return next({ name: 'login' })
     }
-
-    if (isAdmin) {
-        let role = localStorage.getItem("role")
-        if (role == "admin") {
-            return next()
-        } else {
-            return next({ name: 'home' })
-        }
-    }
-
-    return next({ name: 'login' })
 })
 
 export default router
