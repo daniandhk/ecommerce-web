@@ -40,16 +40,16 @@
             >Produk</router-link
           >
         </li>
+        <li v-if="role == 'admin'" class="nav-item">
+          <router-link :to="{ name: 'users' }" class="nav-link"
+            >User</router-link
+          >
+        </li>
         <li v-if="role == 'user'" class="nav-item">
           <router-link :to="{ name: 'history' }" class="nav-link"
             >Pesanan Anda</router-link
           >
         </li>
-        <!-- <li v-if="role == 'user' " class="nav-item">
-          <router-link :to="{ name: 'dashboard' }" class="nav-link"
-            >Dashboard</router-link
-          >
-        </li> -->
         <li
           @click.prevent="logout"
           class="nav-item nav-link"
