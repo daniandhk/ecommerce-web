@@ -5,6 +5,9 @@
         <div class="card border-0 rounded shadow">
           <div class="card-body">
             <h4>Pesanan</h4>
+            <button class="btn btn-sm btn-primary" @click="exportExcel">
+              Export
+            </button>
             <hr />
 
             <div v-if="emptyProducts" class="alert alert-info">
@@ -153,6 +156,32 @@ export default {
         .then((response) => {
           console.log(response);
           this.$router.go();
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+
+    exportExcel() {
+      axios({
+        url: "/export/orders",
+        method: "GET",
+        responseType: "blob",
+      })
+        .then((response) => {
+          // create file link in browser's memory
+          const href = URL.createObjectURL(response.data);
+
+          // create "a" HTML element with href to file & click
+          const link = document.createElement("a");
+          link.href = href;
+          link.setAttribute("download", "orders.xlsx"); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+
+          // clean up "a" element & remove ObjectURL
+          document.body.removeChild(link);
+          URL.revokeObjectURL(href);
         })
         .catch((error) => {
           console.log(error.response.data);
