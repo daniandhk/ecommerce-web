@@ -13,6 +13,8 @@
     "core-js": "^3.6.5",
     "jquery": "^3.6.3",
     "popper.js": "^1.16.1",
+    "portal-vue": "^3.0.0-beta.0",
+    "usemodal-vue3": "^0.3.7",
     "vue": "^3.0.0",
     "vue-router": "^4.0.13"
   },
